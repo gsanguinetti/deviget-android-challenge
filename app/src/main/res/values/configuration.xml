@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string translatable="false" name="database_name">reddit_posts_database</string>
+    <string translatable="false" name="server_scheme">https</string>
+    <string translatable="false" name="server_address">api.reddit.com</string>
+    <integer name="paging_size">15</integer>
+    <integer name="paging_prefetch_distance">5</integer>
+</resources>

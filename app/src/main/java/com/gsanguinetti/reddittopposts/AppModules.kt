@@ -1,5 +1,11 @@
 package com.gsanguinetti.reddittopposts
 
-import org.koin.core.module.Module
+import com.gsanguinetti.reddittopposts.data.dataModule
+import com.gsanguinetti.reddittopposts.domain.domainModule
+import com.gsanguinetti.reddittopposts.presentation.presentationModule
 
-val appModules = listOf<Module>()
+val appModules = listOf(
+    presentationModule,
+    domainModule,
+    dataModule
+)
