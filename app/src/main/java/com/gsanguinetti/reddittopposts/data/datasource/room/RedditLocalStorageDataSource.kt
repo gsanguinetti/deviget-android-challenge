@@ -30,15 +30,16 @@ class RedditLocalStorageDataSource(
     fun getPostById(id: String): Single<RedditTopPost> =
         redditPostsDatabase.postsDao().getPostById(id)
 
-    fun addNewPosts(posts: List<RedditTopPost>) {
-        redditPostsDatabase.runInTransaction {
-            redditPostsDatabase.localPostStatusDao()
+    fun addNewStatuses(posts: List<RedditTopPost>) :Single<List<Long>> {
+            return redditPostsDatabase.localPostStatusDao()
                 .insertPostStatuses(posts.map { PostLocalStatus(it.id) })
-            redditPostsDatabase.postsDao().insertPosts(posts)
-        }
     }
 
-    fun deleteAllPosts(): Completable = redditPostsDatabase.postsDao().deleteAllPosts()
+    fun addNewPosts(posts: List<RedditTopPost>): Single<List<Long>> {
+        return redditPostsDatabase.postsDao().insertPosts(posts)
+    }
+
+    fun deleteAllPosts(): Single<Int> = redditPostsDatabase.postsDao().deleteAllPosts()
 
     fun setPostAsRead(id: String) {
         redditPostsDatabase.localPostStatusDao().setRead(id, true)

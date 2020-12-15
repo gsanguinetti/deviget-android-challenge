@@ -13,19 +13,11 @@ class PostListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_post_list)
         lifecycle.addObserver(postListViewModel)
-
-        postListViewModel.loadingData.observe(this) {
-            Log.i(this::class.java.simpleName, "loadingData: $it")
-        }
 
         postListViewModel.errorFetchingData.observe(this) {
             Log.i(this::class.java.simpleName, "errorFetchingData: $it")
-        }
-
-        postListViewModel.postList.observe(this) {
-            Log.i(this::class.java.simpleName, "postList: $it")
         }
     }
 }

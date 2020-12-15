@@ -15,7 +15,8 @@ class PostListViewModel(
     private val getTopPostsUseCase: GetTopPostsUseCase
 ) : ViewModel(), LifecycleObserver {
 
-    val loadingData = MutableLiveData<Boolean>()
+    val loadingInitial = MutableLiveData<Boolean>()
+    val loadingNext = MutableLiveData<Boolean>()
     val errorFetchingData = UiEvent()
     val postList = MutableLiveData<PagedList<RedditPost>>()
 
@@ -24,13 +25,15 @@ class PostListViewModel(
         getPostFetchStatusUseCase.execute(object :DisposableObserver<FetchStatus>() {
             @WorkerThread
             override fun onNext(status: FetchStatus) {
-                loadingData.postValue(status is FetchStatus.Loading)
+                loadingInitial.postValue(status is FetchStatus.LoadingInitial)
+                loadingNext.postValue(status is FetchStatus.LoadingNext)
                 errorFetchingData.postCall()
             }
 
             @WorkerThread
             override fun onError(e: Throwable) {
-                loadingData.postValue(false)
+                loadingInitial.postValue(false)
+                loadingNext.postValue(false)
                 errorFetchingData.postCall()
             }
 

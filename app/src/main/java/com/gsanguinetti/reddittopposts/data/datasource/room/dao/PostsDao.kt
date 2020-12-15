@@ -15,8 +15,8 @@ interface PostsDao {
     fun getPostById(id: String): Single<RedditTopPost>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPosts(posts: List<RedditTopPost>)
+    fun insertPosts(posts: List<RedditTopPost>): Single<List<Long>>
 
     @Query("DELETE FROM posts")
-    fun deleteAllPosts(): Completable
+    fun deleteAllPosts(): Single<Int>
 }
