@@ -14,6 +14,7 @@ interface RedditService {
         @Query("before") before: String? = null,
         @Query("limit") limit: Int? = null,
         @Query("count") count: Int? = null,
-        @Query("show") show: String? = null
+        @Query("show") show: String? = null,
+        @Query("sr_detail") subredditDetail: Boolean = true
     ): Single<RedditTopResponse>
 }

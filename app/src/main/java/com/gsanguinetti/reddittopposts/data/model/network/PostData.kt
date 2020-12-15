@@ -22,4 +22,10 @@ data class PostData(
     val title: String,
     @SerialName("url")
     val url: String,
+    @SerialName("num_comments")
+    val numComments: Int,
+    @SerialName("sr_detail")
+    val subReddit: SubReddit,
+    @SerialName("score")
+    val score: Int
 )

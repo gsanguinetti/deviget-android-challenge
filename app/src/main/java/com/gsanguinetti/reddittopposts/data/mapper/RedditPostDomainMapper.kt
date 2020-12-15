@@ -9,6 +9,13 @@ class RedditPostDomainMapper :DataMapper<RedditLocalTopPost, RedditPost> {
         RedditPost(
             entity.id,
             entity.title,
-            entity.read
+            entity.read,
+            entity.author,
+            entity.thumbnail,
+            entity.commentsCount,
+            entity.contentUrl,
+            entity.subredditName,
+            entity.subredditIcon,
+            entity.createdAt
         )
 }

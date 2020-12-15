@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ImageButton">
+        <item name="tint">@color/button_gray</item>
+        <item name="android:padding">@dimen/icon_button_padding</item>
+        <item name="android:layout_height">@dimen/icon_button_size</item>
+        <item name="android:layout_width">@dimen/icon_button_size</item>
+        <item name="background">?selectableItemBackground</item>
+    </style>
+</resources>

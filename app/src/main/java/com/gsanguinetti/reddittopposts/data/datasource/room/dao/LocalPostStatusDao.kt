@@ -15,11 +15,11 @@ interface LocalPostStatusDao {
     fun insertPostStatuses(posts: List<PostLocalStatus>): Single<List<Long>>
 
     @Query("UPDATE posts_local_status SET read = :read WHERE postId = :id")
-    fun setRead(id: String, read: Boolean)
+    fun setRead(id: String, read: Boolean): Single<Int>
 
     @Query("UPDATE posts_local_status SET hidden = :hidden WHERE postId = :id")
-    fun setHidden(id: String, hidden: Boolean)
+    fun setHidden(id: String, hidden: Boolean): Single<Int>
 
     @Query("UPDATE posts_local_status SET hidden = :hidden WHERE postId IN (:ids)")
-    fun setHidden(ids: List<String>, hidden: Boolean)
+    fun setHidden(ids: List<String>, hidden: Boolean): Single<Int>
 }

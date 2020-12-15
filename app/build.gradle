@@ -28,7 +28,8 @@ android {
                     'proguard/proguard-kotlin.pro',
                     'proguard/proguard-paging.pro',
                     'proguard/proguard-room.pro',
-                    'proguard/proguard-ui.pro'
+                    'proguard/proguard-ui.pro',
+                    'proguard/proguard-prettytime.pro'
         }
     }
     compileOptions {
@@ -71,6 +72,8 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
+
 
     // Koin DI
     implementation "org.koin:koin-android:$koin_version"

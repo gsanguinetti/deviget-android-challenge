@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Reddit Top Posts</string>
+    <string name="app_name">Reddit Top 50 Posts</string>
+    <string name="no_new_content">There is no new content in the Top 50 Reddit posts.</string>
+    <string name="error_fetching_data">Ups! We have got an error getting your data. Please, check your internet connection and try again.</string>
+    <string name="error_dismissing_posts">We cannot perform this operation right now. Please refresh your post feed and try again.</string>
+    <string name="error_selecting_post">We cannot find the post you have selected. Please refresh your post feed and try again.</string>
+    <string name="post_attrs_format">%s • %s</string>
+    <string name="dismiss_all">Dismiss All</string>
 </resources>

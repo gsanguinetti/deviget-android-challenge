@@ -6,7 +6,6 @@ import com.gsanguinetti.reddittopposts.base.data.DataMapper
 import com.gsanguinetti.reddittopposts.data.model.local.PostLocalStatus
 import com.gsanguinetti.reddittopposts.data.model.local.RedditLocalTopPost
 import com.gsanguinetti.reddittopposts.data.model.local.RedditTopPost
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -30,9 +29,9 @@ class RedditLocalStorageDataSource(
     fun getPostById(id: String): Single<RedditTopPost> =
         redditPostsDatabase.postsDao().getPostById(id)
 
-    fun addNewStatuses(posts: List<RedditTopPost>) :Single<List<Long>> {
-            return redditPostsDatabase.localPostStatusDao()
-                .insertPostStatuses(posts.map { PostLocalStatus(it.id) })
+    fun addNewStatuses(posts: List<RedditTopPost>): Single<List<Long>> {
+        return redditPostsDatabase.localPostStatusDao()
+            .insertPostStatuses(posts.map { PostLocalStatus(it.id) })
     }
 
     fun addNewPosts(posts: List<RedditTopPost>): Single<List<Long>> {
@@ -41,15 +40,12 @@ class RedditLocalStorageDataSource(
 
     fun deleteAllPosts(): Single<Int> = redditPostsDatabase.postsDao().deleteAllPosts()
 
-    fun setPostAsRead(id: String) {
+    fun setPostAsRead(id: String): Single<Int> =
         redditPostsDatabase.localPostStatusDao().setRead(id, true)
-    }
 
-    fun dismissPost(id: String) {
+    fun dismissPost(id: String): Single<Int> =
         redditPostsDatabase.localPostStatusDao().setHidden(id, true)
-    }
 
-    fun dismissAll(ids: List<String>) {
+    fun dismissAll(ids: List<String>): Single<Int> =
         redditPostsDatabase.localPostStatusDao().setHidden(ids, true)
-    }
 }

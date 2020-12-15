@@ -24,7 +24,7 @@ val dataModule = module {
     factory { RedditPostDomainMapper() }
 
     // Networking injections
-    factory { PagingConfiguration(androidContext().resources.getInteger(R.integer.paging_size)) }
+    single { PagingConfiguration(androidContext().resources.getInteger(R.integer.paging_size), androidContext().resources.getInteger(R.integer.client_post_limit)) }
     factory {
         ServerEndpointConfiguration(
             Uri.Builder().scheme(androidContext().getString(R.string.server_scheme))
@@ -53,6 +53,6 @@ val dataModule = module {
     }
     factory { RedditLocalStorageDataSource(get(), get()) }
     single {
-        TopPostsNetworkToLocalDBRepository(get(), get(), get(), get()) as TopPostsRepository
+        TopPostsNetworkToLocalDBRepository(get(), get(), get(), get(), get()) as TopPostsRepository
     }
 }

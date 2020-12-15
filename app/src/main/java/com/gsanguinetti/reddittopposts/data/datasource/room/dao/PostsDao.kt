@@ -14,7 +14,7 @@ interface PostsDao {
     @Query("SELECT * FROM posts WHERE id = :id")
     fun getPostById(id: String): Single<RedditTopPost>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertPosts(posts: List<RedditTopPost>): Single<List<Long>>
 
     @Query("DELETE FROM posts")

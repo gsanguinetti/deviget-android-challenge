@@ -1,21 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    app:cardElevation="@dimen/cardview_default_elevation">
 
-    <TextView
-        android:id="@+id/postTitleTextView"
+    <LinearLayout
+        android:id="@+id/postLayout"
+        android:background="?selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        tools:text="Hello world"/>
+        android:orientation="vertical"
+        android:padding="@dimen/default_padding">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/cardview_dark_background" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/subredditIconImageView"
+                android:layout_width="@dimen/subreddit_icon_size"
+                android:layout_height="@dimen/subreddit_icon_size"
+                android:layout_centerVertical="true"
+                android:background="@drawable/subreddit_icon_placeholder" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/next_margin"
+                android:layout_toEndOf="@id/subredditIconImageView"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/subredditNameTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Hello world" />
+
+                <TextView
+                    android:id="@+id/postAttrsTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Hello world" />
+            </LinearLayout>
+
+            <ImageView
+                style="@style/ImageButton"
+                android:id="@+id/dismissPostImageView"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_clear"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/postTitleTextView"
+                android:textSize="18sp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                tools:text="Hello world" />
+
+            <ImageView
+                android:id="@+id/thumbnailImageView"
+                android:layout_width="0dp"
+                android:layout_weight="0.4"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/thumbnail_height"
+                android:foreground="@drawable/fg_thumbnail"
+                android:background="@drawable/subreddit_thumbnail_placeholder" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

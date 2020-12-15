@@ -3,6 +3,7 @@
     <string translatable="false" name="database_name">reddit_posts_database</string>
     <string translatable="false" name="server_scheme">https</string>
     <string translatable="false" name="server_address">api.reddit.com</string>
-    <integer name="paging_size">15</integer>
+    <integer name="paging_size">10</integer>
     <integer name="paging_prefetch_distance">5</integer>
+    <integer name="client_post_limit">50</integer>
 </resources>
