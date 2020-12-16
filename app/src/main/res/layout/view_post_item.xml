@@ -81,6 +81,28 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/plain_icon_size"
+                android:layout_height="@dimen/plain_icon_size"
+                android:src="@drawable/ic_comments"
+                android:layout_gravity="center_vertical"
+                app:tint="@color/button_gray"/>
+
+            <TextView
+                android:id="@+id/commentsAmountTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/next_margin"
+                tools:text="0" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

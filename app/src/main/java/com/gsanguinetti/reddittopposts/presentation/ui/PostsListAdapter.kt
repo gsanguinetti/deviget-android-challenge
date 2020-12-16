@@ -180,6 +180,8 @@ class RedditPostViewHolder(
                 dismissPostImageView.setOnClickListener {
                     viewModel.onDismissPost(redditPost)
                 }
+
+                commentsAmountTextView?.setText(redditPost.commentsCount.toString())
             }
         }
     }
