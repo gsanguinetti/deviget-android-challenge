@@ -1,6 +1,7 @@
 package com.gsanguinetti.reddittopposts
 
 import android.app.Application
+import android.content.Context
 import com.facebook.flipper.android.AndroidFlipperClient
 import com.facebook.flipper.android.utils.FlipperUtils
 import com.facebook.flipper.plugins.databases.DatabasesFlipperPlugin
@@ -11,18 +12,24 @@ import com.facebook.soloader.SoLoader
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.module.Module
 
 
-class RedditTopPostsApplication : Application() {
+open class RedditTopPostsApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
         startKoin {
             androidLogger()
-            androidContext(this@RedditTopPostsApplication)
-            modules(appModules)
+            androidContext(getAppContext())
+            modules(getAppModules())
         }
+        initHelpers()
+    }
 
+    protected open fun getAppModules(): List<Module> = appModules
+
+    protected open fun initHelpers() {
         SoLoader.init(this, false)
 
         if (BuildConfig.DEBUG && FlipperUtils.shouldEnableFlipper(this)) {
@@ -39,4 +46,6 @@ class RedditTopPostsApplication : Application() {
             }
         }
     }
+
+    protected open fun getAppContext(): Context = this
 }

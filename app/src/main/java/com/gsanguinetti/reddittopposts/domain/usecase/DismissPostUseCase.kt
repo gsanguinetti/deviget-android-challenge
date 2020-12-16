@@ -9,7 +9,7 @@ class DismissPostUseCase(
     private val topPostsRepository: TopPostsRepository
 ) : SingleUseCase<Unit, RedditPost>() {
 
-    override fun buildUseCaseObservable(params: RedditPost?): Single<Unit> {
+    public override fun buildUseCaseObservable(params: RedditPost?): Single<Unit> {
         if(params == null) return Single.error(IllegalAccessError("Post param empty"))
         return topPostsRepository.dismissPost(params)
             .flatMap {
