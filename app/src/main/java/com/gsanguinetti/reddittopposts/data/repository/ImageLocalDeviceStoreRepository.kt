@@ -51,24 +51,19 @@ class ImageLocalDeviceStoreRepository(
         }
 
         val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        var stream: OutputStream? = null
-        var uri: Uri? = null
+        var stream: OutputStream?
+        var uri: Uri?
 
         val contentResolver = appContext.contentResolver
         uri = contentResolver.insert(contentUri, contentValues)
-        if (uri == null) {
-            throw IOException("Failed to create new MediaStore record.")
-        }
+        if (uri == null) throw IOException("Failed to create new MediaStore record.")
 
         stream = contentResolver.openOutputStream(uri)
 
-        if (stream == null) {
-            throw IOException("Failed to get output stream.")
-        }
-
-        if (!image.compress(Bitmap.CompressFormat.JPEG, 100, stream)) {
+        if (stream == null) throw IOException("Failed to get output stream.")
+        if (!image.compress(Bitmap.CompressFormat.JPEG, 100, stream))
             throw IOException("Failed to save bitmap.")
-        }
+
         stream.close()
         return uri
     }
