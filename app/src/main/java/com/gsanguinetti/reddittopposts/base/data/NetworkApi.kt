@@ -19,26 +19,28 @@ class NetworkApi(
     context: Context
 ) {
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(serverEndpointConfiguration.address.toString())
-        .addConverterFactory(
-            Json {
-                ignoreUnknownKeys = true
-            }.asConverterFactory(MediaType.get("application/json"))
-        )
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .client(OkHttpClient.Builder().apply {
-            if (BuildConfig.DEBUG) {
-                this.addNetworkInterceptor(
-                    FlipperOkhttpInterceptor(
-                        AndroidFlipperClient.getInstance(context).getPluginByClass(
-                            NetworkFlipperPlugin::class.java
+    private val retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(serverEndpointConfiguration.address.toString())
+            .addConverterFactory(
+                Json {
+                    ignoreUnknownKeys = true
+                }.asConverterFactory(MediaType.get("application/json"))
+            )
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(OkHttpClient.Builder().apply {
+                if (BuildConfig.DEBUG) {
+                    this.addNetworkInterceptor(
+                        FlipperOkhttpInterceptor(
+                            AndroidFlipperClient.getInstance(context).getPluginByClass(
+                                NetworkFlipperPlugin::class.java
+                            )
                         )
                     )
-                )
-            }
-        }.build())
-        .build()
+                }
+            }.build())
+            .build()
+    }
 
     fun <DATA : Any, T> makeApiCallForResponse(
         apiClass: Class<T>, apiCall: ((api: T) -> Single<DATA>)

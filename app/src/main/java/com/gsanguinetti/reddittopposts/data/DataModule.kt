@@ -37,7 +37,7 @@ val dataModule = module {
     }
     factory {
         ServerEndpointConfiguration(
-            Uri.Builder().scheme(androidContext().getString(R.string.server_scheme))
+            get<Uri.Builder>().scheme(androidContext().getString(R.string.server_scheme))
                 .authority(androidContext().getString(R.string.server_address)).build()
         )
     }
@@ -79,4 +79,5 @@ val dataModule = module {
             androidContext().getString(R.string.local_image_store_folder)
         )
     }
+    factory { Uri.Builder() }
 }
