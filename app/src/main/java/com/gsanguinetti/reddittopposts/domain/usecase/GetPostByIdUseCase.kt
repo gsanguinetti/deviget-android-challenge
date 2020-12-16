@@ -10,7 +10,7 @@ class GetPostByIdUseCase(
 ) : SingleUseCase<RedditPostDetails, String>() {
 
     override fun buildUseCaseObservable(params: String?): Single<RedditPostDetails> {
-        checkNotNull(params)
+        if(params.isNullOrEmpty()) return Single.error(IllegalAccessError("Post id empty"))
         return topPostsRepository.getPost(params).setUpForUseCase()
     }
 }

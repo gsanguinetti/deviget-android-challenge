@@ -11,6 +11,7 @@ import com.gsanguinetti.reddittopposts.data.datasource.room.RedditPostsDatabase
 import com.gsanguinetti.reddittopposts.data.mapper.RedditPostDetailsDomainMapper
 import com.gsanguinetti.reddittopposts.data.mapper.RedditPostDomainMapper
 import com.gsanguinetti.reddittopposts.data.mapper.SourcePostsMapper
+import com.gsanguinetti.reddittopposts.data.model.LocalImageSaveConfiguration
 import com.gsanguinetti.reddittopposts.data.model.PagingConfiguration
 import com.gsanguinetti.reddittopposts.data.model.network.ServerEndpointConfiguration
 import com.gsanguinetti.reddittopposts.data.repository.ImageLocalDeviceStoreRepository
@@ -28,7 +29,12 @@ val dataModule = module {
     factory { RedditPostDetailsDomainMapper() }
 
     // Networking injections
-    single { PagingConfiguration(androidContext().resources.getInteger(R.integer.paging_size), androidContext().resources.getInteger(R.integer.client_post_limit)) }
+    single {
+        PagingConfiguration(
+            androidContext().resources.getInteger(R.integer.paging_size),
+            androidContext().resources.getInteger(R.integer.client_post_limit)
+        )
+    }
     factory {
         ServerEndpointConfiguration(
             Uri.Builder().scheme(androidContext().getString(R.string.server_scheme))
@@ -57,7 +63,20 @@ val dataModule = module {
     }
     factory { RedditLocalStorageDataSource(get(), get()) }
     single {
-        TopPostsNetworkToLocalDBRepository(get(), get(), get(), get(), get(), get()) as TopPostsRepository
+        TopPostsNetworkToLocalDBRepository(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        ) as TopPostsRepository
     }
-    single { ImageLocalDeviceStoreRepository(androidContext()) as ImageStorageRepository }
+    single { ImageLocalDeviceStoreRepository(androidContext(), get()) as ImageStorageRepository }
+    single {
+        LocalImageSaveConfiguration(
+            androidContext().getString(R.string.image_prefix),
+            androidContext().getString(R.string.local_image_store_folder)
+        )
+    }
 }

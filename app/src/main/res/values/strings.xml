@@ -9,4 +9,9 @@
     <string name="download_picture">Save Picture</string>
     <string name="details_empty">Select a post from the list to see its details.</string>
     <string name="post_details">Post details</string>
+    <string name="picture_saved">Picture saved in your local storage.</string>
+    <string name="open_picture">Open</string>
+    <string name="select_gallery_app">Select gallery app</string>
+    <string name="picture_saving_error">We cannot save the picture. Please check your storage space and try again.</string>
+    <string name="permissions_denied">We need access to the local storage in order to save the picture, please try again.</string>
 </resources>

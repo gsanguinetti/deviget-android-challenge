@@ -10,7 +10,7 @@ class SetPostAsReadUseCase(
 ) : SingleUseCase<Unit, RedditPost>() {
 
     override fun buildUseCaseObservable(params: RedditPost?): Single<Unit> {
-        checkNotNull(params)
+        if (params == null) return Single.error(IllegalAccessError("Post parameter not given"))
         return topPostsRepository.setPostAsRead(params)
             .flatMap {
                 if (it == 0) Single.error(IllegalAccessError("Repository has not set any post as read"))

@@ -5,6 +5,7 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.gsanguinetti.reddittopposts.base.presentation.SingleLiveEvent
 import com.gsanguinetti.reddittopposts.base.presentation.UiEvent
 import com.gsanguinetti.reddittopposts.domain.model.RedditPostDetails
 import com.gsanguinetti.reddittopposts.domain.usecase.GetPostByIdUseCase
@@ -27,7 +28,7 @@ class PostDetailViewModel(
     val errorLoadingPostDetails = UiEvent()
 
     val savingPicture = MutableLiveData<Boolean>()
-    val pictureSaved = UiEvent()
+    val pictureSaved = SingleLiveEvent<Uri>()
     val pictureError = UiEvent()
 
     fun onPostSelected(id: String) {
@@ -48,14 +49,14 @@ class PostDetailViewModel(
 
     fun onSaveImageToStorage() {
         postDetails.value?.imageUrl?.let {
-            savePictureToStorageUseCase.execute(object : DisposableSingleObserver<String>() {
+            savePictureToStorageUseCase.execute(object : DisposableSingleObserver<Uri>() {
                 override fun onStart() {
                     savingPicture.postValue(true)
                 }
 
-                override fun onSuccess(t: String) {
+                override fun onSuccess(image: Uri) {
                     savingPicture.postValue(false)
-                    pictureSaved.postCall()
+                    pictureSaved.postValue(image)
                 }
 
                 override fun onError(e: Throwable) {

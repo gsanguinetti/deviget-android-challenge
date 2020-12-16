@@ -10,7 +10,7 @@ class DismissPostUseCase(
 ) : SingleUseCase<Unit, RedditPost>() {
 
     override fun buildUseCaseObservable(params: RedditPost?): Single<Unit> {
-        checkNotNull(params)
+        if(params == null) return Single.error(IllegalAccessError("Post param empty"))
         return topPostsRepository.dismissPost(params)
             .flatMap {
                 if (it != 1) Single.error(IllegalAccessError("Repository has not dismissed any post"))
