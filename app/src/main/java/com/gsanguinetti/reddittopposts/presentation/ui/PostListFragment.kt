@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.gsanguinetti.reddittopposts.R
 import com.gsanguinetti.reddittopposts.base.presentation.DividerSpacingDecoration
+import com.gsanguinetti.reddittopposts.base.presentation.showError
 import com.gsanguinetti.reddittopposts.presentation.viewmodel.PostListViewModel
 import kotlinx.android.synthetic.main.fragment_post_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -80,13 +81,6 @@ class PostListFragment : Fragment() {
         }
         postListViewModel.openUrlEvent.observe(this) {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
-        }
-    }
-
-    private fun showError(errorResId: Int) {
-        view?.let {
-            Snackbar.make(it, errorResId, Snackbar.LENGTH_LONG)
-                .show()
         }
     }
 }

@@ -1,21 +1,27 @@
 package com.gsanguinetti.reddittopposts.presentation.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
-import com.google.android.material.snackbar.Snackbar
 import com.gsanguinetti.reddittopposts.R
 import com.gsanguinetti.reddittopposts.presentation.viewmodel.PostListViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PostListActivity : AppCompatActivity() {
+class PostListActivity : AbstractPostDetailsActivity() {
 
     private val postListViewModel: PostListViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_post_list)
-        lifecycle.addObserver(postListViewModel)
+
         postListViewModel.onCreate(savedInstanceState == null)
+        postListViewModel.itemDismissedEvent.observe(this) { onItemDismissed(it) }
+        postListViewModel.itemsDismissedEvent.observe(this) { onItemsDismissed(it) }
+        postListViewModel.itemSelectedEvent.observe(this) {
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+                Unit
+            else onItemSelected(it)
+        }
     }
 }

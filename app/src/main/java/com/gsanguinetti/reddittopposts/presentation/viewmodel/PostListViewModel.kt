@@ -20,7 +20,7 @@ class PostListViewModel(
     private val dismissAllUseCase: DismissAllUseCase,
     private val getTopPostsUseCase: GetTopPostsUseCase,
     private val setPostAsReadUseCase: SetPostAsReadUseCase
-) : ViewModel(), LifecycleObserver {
+) : ViewModel() {
 
     val loadingInitial = MutableLiveData<Boolean>()
     val loadingNext = MutableLiveData<Boolean>()
@@ -30,6 +30,9 @@ class PostListViewModel(
     val openUrlEvent = SingleLiveEvent<String>()
     val canDismissAll = MutableLiveData<Boolean>()
     val postList = MutableLiveData<PagedList<RedditPost>>()
+    val itemDismissedEvent = SingleLiveEvent<String>()
+    val itemsDismissedEvent = SingleLiveEvent<List<String>>()
+    val itemSelectedEvent = SingleLiveEvent<String>()
 
     fun onCreate(refreshData: Boolean) {
         getPostFetchStatusUseCase.execute(object : DisposableObserver<FetchStatus>() {
@@ -85,7 +88,9 @@ class PostListViewModel(
 
     fun onDismissPost(post: RedditPost) {
         dismissPostUseCase.execute(object : DisposableSingleObserver<Unit>() {
-            override fun onSuccess(t: Unit) = Unit
+            override fun onSuccess(t: Unit) {
+                itemDismissedEvent.postValue(post.id)
+            }
             override fun onError(e: Throwable) {
                 errorDismissingPost.postCall()
             }
@@ -95,7 +100,9 @@ class PostListViewModel(
 
     fun onDismissingAll(postList: List<RedditPost>) {
         dismissAllUseCase.execute(object : DisposableSingleObserver<Unit>() {
-            override fun onSuccess(t: Unit) = Unit
+            override fun onSuccess(t: Unit) {
+                itemsDismissedEvent.postValue(postList.map { it.id })
+            }
             override fun onError(e: Throwable) {
                 errorDismissingPost.postCall()
             }
@@ -119,5 +126,6 @@ class PostListViewModel(
             }
 
         }, post)
+        itemSelectedEvent.postValue(post.id)
     }
 }

@@ -8,11 +8,14 @@ import com.gsanguinetti.reddittopposts.base.data.NetworkApi
 import com.gsanguinetti.reddittopposts.data.datasource.network.RedditNetworkDataSource
 import com.gsanguinetti.reddittopposts.data.datasource.room.RedditLocalStorageDataSource
 import com.gsanguinetti.reddittopposts.data.datasource.room.RedditPostsDatabase
+import com.gsanguinetti.reddittopposts.data.mapper.RedditPostDetailsDomainMapper
 import com.gsanguinetti.reddittopposts.data.mapper.RedditPostDomainMapper
 import com.gsanguinetti.reddittopposts.data.mapper.SourcePostsMapper
 import com.gsanguinetti.reddittopposts.data.model.PagingConfiguration
 import com.gsanguinetti.reddittopposts.data.model.network.ServerEndpointConfiguration
+import com.gsanguinetti.reddittopposts.data.repository.ImageLocalDeviceStoreRepository
 import com.gsanguinetti.reddittopposts.data.repository.TopPostsNetworkToLocalDBRepository
+import com.gsanguinetti.reddittopposts.domain.repository.ImageStorageRepository
 import com.gsanguinetti.reddittopposts.domain.repository.TopPostsRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -22,6 +25,7 @@ val dataModule = module {
     // Mapper injections
     factory { SourcePostsMapper() }
     factory { RedditPostDomainMapper() }
+    factory { RedditPostDetailsDomainMapper() }
 
     // Networking injections
     single { PagingConfiguration(androidContext().resources.getInteger(R.integer.paging_size), androidContext().resources.getInteger(R.integer.client_post_limit)) }
@@ -53,6 +57,7 @@ val dataModule = module {
     }
     factory { RedditLocalStorageDataSource(get(), get()) }
     single {
-        TopPostsNetworkToLocalDBRepository(get(), get(), get(), get(), get()) as TopPostsRepository
+        TopPostsNetworkToLocalDBRepository(get(), get(), get(), get(), get(), get()) as TopPostsRepository
     }
+    single { ImageLocalDeviceStoreRepository(androidContext()) as ImageStorageRepository }
 }

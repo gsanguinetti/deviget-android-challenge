@@ -6,4 +6,6 @@
     <string name="error_selecting_post">We cannot find the post you have selected. Please refresh your post feed and try again.</string>
     <string name="post_attrs_format">%s • %s</string>
     <string name="dismiss_all">Dismiss All</string>
+    <string name="download_picture">Save Picture</string>
+    <string name="details_empty">Select a post from the list to see its details.</string>
 </resources>

@@ -9,4 +9,6 @@ val domainModule = module {
     factory { DismissPostUseCase(get()) }
     factory { DismissAllUseCase(get()) }
     factory { SetPostAsReadUseCase(get()) }
+    factory { GetPostByIdUseCase(get()) }
+    factory { SavePictureToStorageUseCase(get()) }
 }

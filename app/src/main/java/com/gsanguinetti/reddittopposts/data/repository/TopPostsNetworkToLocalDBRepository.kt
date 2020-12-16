@@ -3,12 +3,14 @@ package com.gsanguinetti.reddittopposts.data.repository
 import androidx.paging.PagedList
 import com.gsanguinetti.reddittopposts.data.datasource.network.RedditNetworkDataSource
 import com.gsanguinetti.reddittopposts.data.datasource.room.RedditLocalStorageDataSource
+import com.gsanguinetti.reddittopposts.data.mapper.RedditPostDetailsDomainMapper
 import com.gsanguinetti.reddittopposts.data.mapper.RedditPostDomainMapper
 import com.gsanguinetti.reddittopposts.data.mapper.SourcePostsMapper
 import com.gsanguinetti.reddittopposts.data.model.PagingConfiguration
 import com.gsanguinetti.reddittopposts.data.model.local.RedditTopPost
 import com.gsanguinetti.reddittopposts.domain.model.FetchStatus
 import com.gsanguinetti.reddittopposts.domain.model.RedditPost
+import com.gsanguinetti.reddittopposts.domain.model.RedditPostDetails
 import com.gsanguinetti.reddittopposts.domain.repository.TopPostsRepository
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
@@ -18,6 +20,7 @@ import io.reactivex.schedulers.Schedulers
 
 class TopPostsNetworkToLocalDBRepository(
     private val postDomainMapper: RedditPostDomainMapper,
+    private val postDetailsMapper: RedditPostDetailsDomainMapper,
     private val networkSourcePostsMapper: SourcePostsMapper,
     private val networkDataSource: RedditNetworkDataSource,
     private val localStorageDataSource: RedditLocalStorageDataSource,
@@ -102,5 +105,10 @@ class TopPostsNetworkToLocalDBRepository(
 
     override fun setPostAsRead(redditPost: RedditPost): Single<Int> {
         return localStorageDataSource.setPostAsRead(redditPost.id)
+    }
+
+    override fun getPost(id: String): Single<RedditPostDetails> {
+        return localStorageDataSource.getPostById(id)
+            .map { postDetailsMapper.mapFromEntity(it) }
     }
 }
