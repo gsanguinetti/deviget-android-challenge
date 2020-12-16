@@ -1,4 +1,4 @@
-package com.gsanguinetti.reddittopposts.presentation.ui
+package com.gsanguinetti.reddittopposts.presentation.ui.activity
 
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -8,7 +8,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 abstract class AbstractPostDetailsActivity : AppCompatActivity() {
 
-    private val postDetailsViewModel: PostDetailViewModel by viewModel()
+    protected val postDetailsViewModel: PostDetailViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)

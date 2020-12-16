@@ -4,9 +4,8 @@
     android:layout_height="match_parent">
 
     <fragment
-        android:id="@+id/postListFragment"
+        android:id="@+id/postDetailsFragment"
+        android:name="com.gsanguinetti.reddittopposts.presentation.ui.fragment.PostDetailsFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.gsanguinetti.reddittopposts.presentation.ui.fragment.PostListFragment" />
-
+        android:layout_height="match_parent" />
 </FrameLayout>

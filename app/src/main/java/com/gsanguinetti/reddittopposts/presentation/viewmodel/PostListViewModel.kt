@@ -54,10 +54,10 @@ class PostListViewModel(
 
         })
 
-        onLoadData(refreshData)
+        if(refreshData) onLoadData()
     }
 
-    private fun onLoadData(refreshData: Boolean) {
+    private fun onLoadData() {
         getTopPostsUseCase.execute(object : DisposableObserver<PagedList<RedditPost>>() {
             @WorkerThread
             override fun onNext(list: PagedList<RedditPost>) {
@@ -72,7 +72,7 @@ class PostListViewModel(
             @WorkerThread
             override fun onComplete() = Unit
 
-        }, refreshData)
+        }, true)
     }
 
     private fun onErrorThrown() {
@@ -83,7 +83,7 @@ class PostListViewModel(
     }
 
     fun onRefreshData() {
-        onLoadData(true)
+        onLoadData()
     }
 
     fun onDismissPost(post: RedditPost) {

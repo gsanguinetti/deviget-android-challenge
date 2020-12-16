@@ -1,4 +1,4 @@
-package com.gsanguinetti.reddittopposts.presentation.ui
+package com.gsanguinetti.reddittopposts.presentation.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,7 +22,6 @@ class PostDetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_post_details, container, false)
     }
 

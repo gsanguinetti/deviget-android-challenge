@@ -24,7 +24,10 @@ import kotlinx.android.synthetic.main.view_post_item.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-class PostsListAdapter(private val listViewModel: PostListViewModel) :
+class PostsListAdapter(
+    private val listViewModel: PostListViewModel,
+    private val onListEmptyListener: () -> Unit
+) :
     PagedListAdapter<RedditPost, RecyclerView.ViewHolder>(
         object : DiffUtil.ItemCallback<RedditPost>() {
             override fun areItemsTheSame(oldItem: RedditPost, newItem: RedditPost): Boolean =
@@ -37,42 +40,32 @@ class PostsListAdapter(private val listViewModel: PostListViewModel) :
     companion object {
         private const val POST_ITEM = 1
         private const val LOADING_ITEM = 2
-        private const val EMPTY_ITEM = 3
     }
 
     private var _loadingNextPage: Boolean = false
-    private var _loadingInitial: Boolean = true
-    private var empty: Boolean = false
 
     override fun getItemViewType(position: Int): Int {
-        return when {
-            (position == itemCount - 1 && _loadingNextPage) -> LOADING_ITEM
-            empty && !_loadingNextPage -> EMPTY_ITEM
-            else -> POST_ITEM
-        }
+        return if ((position == itemCount - 1 && _loadingNextPage)) LOADING_ITEM
+        else POST_ITEM
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             POST_ITEM -> RedditPostViewHolder.create(parent, listViewModel)
-            EMPTY_ITEM -> EmptyViewHolder.create(parent)
             LOADING_ITEM -> LoadingViewHolder.create(parent)
             else -> throw IllegalAccessException()
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (!empty) {
-            when (getItemViewType(position)) {
-                POST_ITEM -> (holder as RedditPostViewHolder).bind(getItem(position))
-                LOADING_ITEM -> (holder as LoadingViewHolder).bind(_loadingNextPage)
-            }
+        when (getItemViewType(position)) {
+            POST_ITEM -> (holder as RedditPostViewHolder).bind(getItem(position))
+            LOADING_ITEM -> (holder as LoadingViewHolder).bind(_loadingNextPage)
         }
     }
 
     override fun getItemCount(): Int {
-        return if (empty && !_loadingNextPage) 1
-        else super.getItemCount() + if (_loadingNextPage) 1 else 0
+        return super.getItemCount() + if (_loadingNextPage) 1 else 0
     }
 
     override fun onCurrentListChanged(
@@ -88,15 +81,7 @@ class PostsListAdapter(private val listViewModel: PostListViewModel) :
             20
         )
 
-        if (!_loadingNextPage && !_loadingInitial && currentList.isNullOrEmpty()) {
-            empty = true
-            notifyDataSetChanged()
-        }
-
-        if (!_loadingNextPage && !currentList.isNullOrEmpty() && empty) {
-            empty = false
-            notifyItemRangeChanged(0, itemCount)
-        }
+        if(!_loadingNextPage && currentList.isNullOrEmpty()) onListEmptyListener.invoke()
     }
 
     fun onLoadingNextPage() {
@@ -110,10 +95,6 @@ class PostsListAdapter(private val listViewModel: PostListViewModel) :
             if (_loadingNextPage) notifyItemInserted(super.getItemCount())
             else notifyItemRemoved(super.getItemCount())
         }
-    }
-
-    fun setLoadingInitial(loading: Boolean) {
-        _loadingInitial = loading
     }
 }
 
@@ -208,18 +189,6 @@ class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             return LoadingViewHolder(
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.view_loading_next, parent, false)
-            )
-        }
-    }
-}
-
-class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    companion object {
-        fun create(parent: ViewGroup): LoadingViewHolder {
-            return LoadingViewHolder(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.view_empty_item, parent, false)
             )
         }
     }

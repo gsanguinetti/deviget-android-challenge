@@ -10,12 +10,12 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.5"
-        android:name="com.gsanguinetti.reddittopposts.presentation.ui.PostListFragment" />
+        android:name="com.gsanguinetti.reddittopposts.presentation.ui.fragment.PostListFragment" />
 
     <fragment
         android:id="@+id/postDetailsFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.5"
-        android:name="com.gsanguinetti.reddittopposts.presentation.ui.PostDetailsFragment" />
+        android:name="com.gsanguinetti.reddittopposts.presentation.ui.fragment.PostDetailsFragment" />
 </LinearLayout>

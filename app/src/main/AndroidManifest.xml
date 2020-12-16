@@ -10,14 +10,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RedditTopPosts">
-        <activity android:name=".presentation.ui.PostListActivity"
-            android:configChanges="orientation">
+        <activity android:name=".presentation.ui.activity.PostListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".presentation.ui.activity.PostDetailsFullActivity"
+            android:parentActivityName=".presentation.ui.activity.PostListActivity"
+            android:label="@string/post_details" />
         <activity android:name="com.facebook.flipper.android.diagnostics.FlipperDiagnosticActivity"
             android:exported="true"/>
     </application>
