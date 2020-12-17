@@ -1,3 +1,4 @@
+# deviget-android-challenge
 This app solves the Deviget Android Challenge.
 
 The app load paginated posts from Reddit in order to show the first 50 Top Posts. Room library is used to persist the status of each post (read or hidden) between each session.
